@@ -54,6 +54,5 @@ void merge_sort(int *array, size_t size)
 
 	merge_sort(array, mid);
 	merge_sort(array + mid, size - mid);
-	if (mid <= (size - mid))
-		merge(array, mid, size - mid);
+	merge(array, mid, size - mid);
 }
