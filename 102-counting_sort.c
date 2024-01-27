@@ -31,28 +31,35 @@ int max_element(int *array, size_t size)
 
 void counting_sort(int *array, size_t size)
 {
-	int max = max_element(array, size) + 1, i;
+	size_t i;
+	int max, *temp, *count;
 
-	int *count = malloc(sizeof(int) * max);
+	max = max_element(array, size);
 
-	int *temp = malloc(sizeof(int) * size);
-
+	count = malloc(sizeof(int) * (max + 1));
 	if (count == NULL)
 		return;
-
-	for (i = 0; i < max; i++)
+	temp = malloc(sizeof(int) * size);
+	if (temp == NULL)
 	{
-		count[i] = 0;
+		free(count);
+		return;
 	}
+
+	if (count == NULL || size < 2)
+		return;
+
+	for (i = 0; (int)i < max + 1; i++)
+		count[i] = 0;
 
 	for (i = 0; i < size; i++)
 		++count[array[i]];
 
-	for (i = 0; i < max; i++)
+	for (i = 0; (int)i < max + 1; i++)
 		count[i] += count[i - 1];
+	print_array(count, max + 1);
 
-	print_array(count, max);
-	for (i = size - 1; i >= 0; i--)
+	for (i = size - 1; (int)i >= 0 ; i--)
 		temp[--count[array[i]]] = array[i];
 
 	for (i = 0; i < size; i++)
